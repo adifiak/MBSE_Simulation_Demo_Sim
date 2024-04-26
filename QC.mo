@@ -383,11 +383,19 @@ package QC
       Placement(visible = true, transformation(origin = {-50, 0}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.CombiTimeTable combiTimeTable(table = [0, 0, 0, 0; 3, 0, 0.01, 0; 5, 0, 0.015, 0; 6, 0, 0.08, 0; 8, 0, 0.0, 0; 9, 0, -0.005, 0; 10, 0, 0, 0])  annotation(
       Placement(visible = true, transformation(origin = {0, 0}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
+  Modelica.Mechanics.MultiBody.Forces.WorldTorque torque annotation(
+      Placement(visible = true, transformation(origin = {-50, -30}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
+  Modelica.Blocks.Sources.CombiTimeTable combiTimeTable1(table = [0, 0, 0, 0; 3, 0, 0.01, 0; 5, 0, 0.015, 0; 6, 0, 0.08, 0; 8, 0, 0.0, 0; 9, 0, -0.005, 0; 10, 0, 0, 0]) annotation(
+      Placement(visible = true, transformation(origin = {0, -30}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
   equation
     connect(worldForce2.frame_b, frame_b) annotation(
       Line(points = {{-60, 0}, {-100, 0}}, color = {95, 95, 95}));
     connect(combiTimeTable.y, worldForce2.force) annotation(
       Line(points = {{-10, 0}, {-38, 0}}, color = {0, 0, 127}, thickness = 0.5));
+  connect(torque.frame_b, frame_b) annotation(
+      Line(points = {{-60, -30}, {-80, -30}, {-80, 0}, {-100, 0}}, color = {95, 95, 95}));
+  connect(torque.torque, combiTimeTable1.y) annotation(
+      Line(points = {{-38, -30}, {-10, -30}}, color = {0, 0, 127}, thickness = 0.5));
   annotation(
       Documentation);
 end Wind;
