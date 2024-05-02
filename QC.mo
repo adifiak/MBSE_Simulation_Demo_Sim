@@ -51,7 +51,9 @@ package QC
       Line(points = {{70, 0}, {80, 0}, {80, -88}, {34, -88}}, color = {95, 95, 95}));
   connect(wind.frame_b, chasis.frame_a4) annotation(
       Line(points = {{70, 40}, {60, 40}, {60, 20}, {80, 20}, {80, 0}, {70, 0}}, color = {95, 95, 95}));
-  end Quadcopter;
+  annotation(
+      __OpenModelica_simulationFlags(lv = "LOG_STATS", s = "dassl", variableFilter = ".*"));
+end Quadcopter;
 
   model Chasis
     Modelica.Mechanics.MultiBody.Parts.BodyShape bodyShape(m = 0.01, r = {0.1, 0, 0.1}) annotation(
@@ -338,17 +340,29 @@ package QC
     Modelica.Blocks.Sources.Constant const(k = 66.2) annotation(
       Placement(visible = true, transformation(origin = {-10, 50}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     Modelica.Blocks.Sources.Constant const1(k = 0) annotation(
-      Placement(visible = true, transformation(origin = {24, 16}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+      Placement(visible = true, transformation(origin = {-60, 2}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     Modelica.Blocks.Sources.Constant const2(k = 0) annotation(
-      Placement(visible = true, transformation(origin = {24, -16}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+      Placement(visible = true, transformation(origin = {-60, -36}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     Modelica.Blocks.Sources.Constant const3(k = 0) annotation(
-      Placement(visible = true, transformation(origin = {24, -46}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+      Placement(visible = true, transformation(origin = {-60, -68}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     Modelica.Blocks.Continuous.LimPID pid(Td = 1.5, Ti = 1000, controllerType = Modelica.Blocks.Types.SimpleController.PID, initType = Modelica.Blocks.Types.Init.NoInit, k = 7, yMax = 10, yMin = -10, y_start = 0) annotation(
       Placement(visible = true, transformation(origin = {-30, 80}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-    Modelica.Blocks.Sources.Constant des_hight(k = 0.4) annotation(
+    Modelica.Blocks.Sources.Constant des_hight(k = 0.0) annotation(
       Placement(visible = true, transformation(origin = {-60, 80}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     Modelica.Blocks.Math.Add add annotation(
       Placement(visible = true, transformation(origin = {20, 60}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Blocks.Continuous.LimPID pid1(controllerType = Modelica.Blocks.Types.SimpleController.PD,k = 30, wd = 0.5, wp = 0.001,yMax = 10, yMin = -10)  annotation(
+      Placement(visible = true, transformation(origin = {-30, 2}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Blocks.Continuous.LimPID limPID( controllerType = Modelica.Blocks.Types.SimpleController.PD, k = -30, wd = 0,yMax = 10, yMin = -10) annotation(
+      Placement(visible = true, transformation(origin = {-30, -36}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Blocks.Continuous.LimPID limPID1(controllerType = Modelica.Blocks.Types.SimpleController.PD, k = 30, yMax = 10, yMin = -10) annotation(
+      Placement(visible = true, transformation(origin = {-30, -68}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Blocks.Sources.Constant constant2(k = 0) annotation(
+      Placement(visible = true, transformation(origin = {-90, -104}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Blocks.Sources.Constant constant3(k = 0) annotation(
+      Placement(visible = true, transformation(origin = {0, 20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Blocks.Sources.Constant constant1(k = 0.1) annotation(
+      Placement(visible = true, transformation(origin = {38, -68}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   equation
     connect(motorMixingAlgorithm.RF, RF) annotation(
       Line(points = {{70, 6}, {74, 6}, {74, 60}, {100, 60}}, color = {0, 0, 127}));
@@ -358,12 +372,6 @@ package QC
       Line(points = {{70, -2}, {80, -2}, {80, -20}, {100, -20}}, color = {0, 0, 127}));
     connect(motorMixingAlgorithm.LF, LF) annotation(
       Line(points = {{70, -6}, {74, -6}, {74, -60}, {100, -60}}, color = {0, 0, 127}));
-    connect(const1.y, motorMixingAlgorithm.R) annotation(
-      Line(points = {{35, 16}, {40, 16}, {40, 2}, {50, 2}}, color = {0, 0, 127}));
-    connect(const2.y, motorMixingAlgorithm.P) annotation(
-      Line(points = {{35, -16}, {40, -16}, {40, -2}, {50, -2}}, color = {0, 0, 127}));
-    connect(const3.y, motorMixingAlgorithm.Y) annotation(
-      Line(points = {{35, -46}, {44, -46}, {44, -8}, {50, -8}}, color = {0, 0, 127}));
     connect(des_hight.y, pid.u_s) annotation(
       Line(points = {{-48, 80}, {-42, 80}}, color = {0, 0, 127}));
     connect(y, pid.u_m) annotation(
@@ -374,18 +382,38 @@ package QC
       Line(points = {{-18, 80}, {-4, 80}, {-4, 66}, {8, 66}}, color = {0, 0, 127}));
     connect(add.y, motorMixingAlgorithm.T) annotation(
       Line(points = {{32, 60}, {44, 60}, {44, 8}, {50, 8}}, color = {0, 0, 127}));
-  end Controller;
+  connect(const1.y, pid1.u_s) annotation(
+      Line(points = {{-49, 2}, {-42, 2}}, color = {0, 0, 127}));
+  connect(const2.y, limPID.u_s) annotation(
+      Line(points = {{-48, -36}, {-42, -36}}, color = {0, 0, 127}));
+  connect(const3.y, limPID1.u_s) annotation(
+      Line(points = {{-48, -68}, {-42, -68}}, color = {0, 0, 127}));
+  connect(pid1.y, motorMixingAlgorithm.R) annotation(
+      Line(points = {{-18, 2}, {50, 2}}, color = {0, 0, 127}));
+  connect(limPID.y, motorMixingAlgorithm.P) annotation(
+      Line(points = {{-18, -36}, {0, -36}, {0, -2}, {50, -2}}, color = {0, 0, 127}));
+  connect(b, pid1.u_m) annotation(
+      Line(points = {{-100, -50}, {-76, -50}, {-76, -16}, {-30, -16}, {-30, -10}}, color = {0, 0, 127}));
+  connect(limPID1.y, motorMixingAlgorithm.Y) annotation(
+      Line(points = {{-18, -68}, {12, -68}, {12, -8}, {50, -8}}, color = {0, 0, 127}));
+  connect(c, limPID.u_m) annotation(
+      Line(points = {{-100, -80}, {-72, -80}, {-72, -48}, {-30, -48}}, color = {0, 0, 127}));
+  connect(a, limPID1.u_m) annotation(
+      Line(points = {{-100, -20}, {-78, -20}, {-78, -92}, {-30, -92}, {-30, -80}}, color = {0, 0, 127}));
+  annotation(
+      __OpenModelica_simulationFlags(lv = "LOG_STATS", s = "dassl", variableFilter = ".*"));
+end Controller;
 
   model Wind
     Modelica.Mechanics.MultiBody.Interfaces.Frame_b frame_b annotation(
       Placement(visible = true, transformation(origin = {-100, 0}, extent = {{-16, -16}, {16, 16}}, rotation = 0), iconTransformation(origin = {-100, 0}, extent = {{-16, -16}, {16, 16}}, rotation = 0)));
-    Modelica.Mechanics.MultiBody.Forces.WorldForce worldForce2(resolveInFrame = Modelica.Mechanics.MultiBody.Types.ResolveInFrameB.frame_b) annotation(
+    Modelica.Mechanics.MultiBody.Forces.WorldForce worldForce2(resolveInFrame = Modelica.Mechanics.MultiBody.Types.ResolveInFrameB.world) annotation(
       Placement(visible = true, transformation(origin = {-50, 0}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.CombiTimeTable combiTimeTable(table = [0, 0, 0, 0; 3, 0, 0.01, 0; 5, 0, 0.015, 0; 6, 0, 0.08, 0; 8, 0, 0.0, 0; 9, 0, -0.005, 0; 10, 0, 0, 0])  annotation(
       Placement(visible = true, transformation(origin = {0, 0}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
-  Modelica.Mechanics.MultiBody.Forces.WorldTorque torque annotation(
+  Modelica.Mechanics.MultiBody.Forces.WorldTorque torque(resolveInFrame = Modelica.Mechanics.MultiBody.Types.ResolveInFrameB.world)  annotation(
       Placement(visible = true, transformation(origin = {-50, -30}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
-  Modelica.Blocks.Sources.CombiTimeTable combiTimeTable1(table = [0, 0, 0, 0; 3, 0, 0.01, 0; 5, 0, 0.015, 0; 6, 0, 0.08, 0; 8, 0, 0.0, 0; 9, 0, -0.005, 0; 10, 0, 0, 0]) annotation(
+  Modelica.Blocks.Sources.CombiTimeTable combiTimeTable1(table = [0, 0, 0, 0; 3, 0, 0, 0; 5, 0.001, 0, 0; 6, 0, 0, 0; 8, 0, 0, 0; 9, 0, 0, 0; 10, 0, 0, 0]) annotation(
       Placement(visible = true, transformation(origin = {0, -30}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
   equation
     connect(worldForce2.frame_b, frame_b) annotation(
@@ -397,7 +425,9 @@ package QC
   connect(torque.torque, combiTimeTable1.y) annotation(
       Line(points = {{-38, -30}, {-10, -30}}, color = {0, 0, 127}, thickness = 0.5));
   annotation(
-      Documentation);
+      Documentation,
+  __OpenModelica_simulationFlags(lv = "LOG_STATS", s = "dassl", variableFilter = ".*"),
+  Diagram(graphics = {Text(origin = {37, -29}, extent = {{-17, 13}, {17, -13}}, textString = "[x, y,z]")}));
 end Wind;
   annotation(
     uses(Modelica(version = "4.0.0"), Modelica_DeviceDrivers(version = "2.1.1")));
