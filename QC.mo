@@ -16,7 +16,7 @@ package QC
       Placement(visible = true, transformation(origin = {24, -88}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     QC.Controller controller annotation(
       Placement(visible = true, transformation(origin = {-30, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Wind wind annotation(
+    Wind wind annotation(
       Placement(visible = true, transformation(origin = {80, 40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   equation
     connect(controller.RF, rPU_ClockWise.u) annotation(
@@ -47,13 +47,13 @@ package QC
       Line(points = {{34, -24}, {38, -24}, {38, -2}, {50, -2}}, color = {95, 95, 95}));
     connect(rPU_CounterClockWise1.frame_b, chasis.frame_a_LF) annotation(
       Line(points = {{34, -64}, {44, -64}, {44, -8}, {50, -8}}));
-  connect(chasis.frame_a4, sensors.frame_a) annotation(
+    connect(chasis.frame_a4, sensors.frame_a) annotation(
       Line(points = {{70, 0}, {80, 0}, {80, -88}, {34, -88}}, color = {95, 95, 95}));
-  connect(wind.frame_b, chasis.frame_a4) annotation(
+    connect(wind.frame_b, chasis.frame_a4) annotation(
       Line(points = {{70, 40}, {60, 40}, {60, 20}, {80, 20}, {80, 0}, {70, 0}}, color = {95, 95, 95}));
-  annotation(
+    annotation(
       __OpenModelica_simulationFlags(lv = "LOG_STATS", s = "dassl", variableFilter = ".*"));
-end Quadcopter;
+  end Quadcopter;
 
   model Chasis
     Modelica.Mechanics.MultiBody.Parts.BodyShape bodyShape(m = 0.01, r = {0.1, 0, 0.1}) annotation(
@@ -335,100 +335,155 @@ end Quadcopter;
         Icon(graphics = {Text(origin = {-70, 80}, extent = {{10, -8}, {-10, 8}}, textString = "T"), Text(origin = {-72, 28}, extent = {{-8, 8}, {8, -8}}, textString = "R"), Text(origin = {-70, -28}, extent = {{-8, 8}, {8, -8}}, textString = "P"), Text(origin = {-70, -80}, extent = {{-8, 8}, {8, -8}}, textString = "Y"), Text(origin = {74, -60}, extent = {{-8, 8}, {8, -8}}, textString = "LF"), Text(origin = {74, 20}, extent = {{-8, 8}, {8, -8}}, textString = "RB"), Text(origin = {74, -20}, extent = {{-8, 8}, {8, -8}}, textString = "LB"), Text(origin = {74, 60}, extent = {{10, -8}, {-10, 8}}, textString = "RF"), Rectangle(extent = {{-100, 100}, {100, -100}})}));
     end MotorMixingAlgorithm;
 
-    Controller.MotorMixingAlgorithm motorMixingAlgorithm annotation(
-      Placement(visible = true, transformation(origin = {60, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-    Modelica.Blocks.Sources.Constant const(k = 66.2) annotation(
-      Placement(visible = true, transformation(origin = {-10, 50}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    QC.Controller.MotorMixingAlgorithm motorMixingAlgorithm annotation(
+      Placement(visible = true, transformation(origin = {74, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    Modelica.Blocks.Sources.Constant HoverThrustConst(k = 66.2) annotation(
+      Placement(visible = true, transformation(origin = {20, 78}, extent = {{-6, -6}, {6, 6}}, rotation = 0)));
     Modelica.Blocks.Sources.Constant const1(k = 0) annotation(
-      Placement(visible = true, transformation(origin = {-60, 2}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-    Modelica.Blocks.Sources.Constant const2(k = 0) annotation(
-      Placement(visible = true, transformation(origin = {-60, -36}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-    Modelica.Blocks.Sources.Constant const3(k = 0) annotation(
-      Placement(visible = true, transformation(origin = {-60, -68}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+      Placement(visible = true, transformation(origin = {10, -20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     Modelica.Blocks.Continuous.LimPID pid(Td = 1.5, Ti = 1000, controllerType = Modelica.Blocks.Types.SimpleController.PID, initType = Modelica.Blocks.Types.Init.NoInit, k = 7, yMax = 10, yMin = -10, y_start = 0) annotation(
-      Placement(visible = true, transformation(origin = {-30, 80}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+      Placement(visible = true, transformation(origin = {0, 90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     Modelica.Blocks.Sources.Constant des_hight(k = 0.0) annotation(
-      Placement(visible = true, transformation(origin = {-60, 80}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+      Placement(visible = true, transformation(origin = {-30, 90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     Modelica.Blocks.Math.Add add annotation(
-      Placement(visible = true, transformation(origin = {20, 60}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Blocks.Continuous.LimPID pid1(controllerType = Modelica.Blocks.Types.SimpleController.PD,k = 30, wd = 0.5, wp = 0.001,yMax = 10, yMin = -10)  annotation(
-      Placement(visible = true, transformation(origin = {-30, 2}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Blocks.Continuous.LimPID limPID( controllerType = Modelica.Blocks.Types.SimpleController.PD, k = -30, wd = 0,yMax = 10, yMin = -10) annotation(
-      Placement(visible = true, transformation(origin = {-30, -36}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Blocks.Continuous.LimPID limPID1(controllerType = Modelica.Blocks.Types.SimpleController.PD, k = 30, yMax = 10, yMin = -10) annotation(
-      Placement(visible = true, transformation(origin = {-30, -68}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Blocks.Sources.Constant constant2(k = 0) annotation(
-      Placement(visible = true, transformation(origin = {-90, -104}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+      Placement(visible = true, transformation(origin = {44, 84}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    Modelica.Blocks.Continuous.LimPID RollPID(controllerType = Modelica.Blocks.Types.SimpleController.PD, k = 30, wd = 0.5, wp = 0.001, yMax = 10, yMin = -10) annotation(
+      Placement(visible = true, transformation(origin = {40, -20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    Modelica.Blocks.Continuous.LimPID PitchPID(controllerType = Modelica.Blocks.Types.SimpleController.PD, k = -30, wd = 0, yMax = 10, yMin = -10) annotation(
+      Placement(visible = true, transformation(origin = {38, -50}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    Modelica.Blocks.Continuous.LimPID YawPID1(controllerType = Modelica.Blocks.Types.SimpleController.PD, k = 30, yMax = 10, yMin = -10) annotation(
+      Placement(visible = true, transformation(origin = {38, -80}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+
+    model PositionDecoder
+  Modelica.Blocks.Interfaces.RealInput X_abs annotation(
+        Placement(visible = true, transformation(origin = {-100, 80}, extent = {{-20, -20}, {20, 20}}, rotation = 0), iconTransformation(origin = {-92, 70}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
+  Modelica.Blocks.Interfaces.RealInput Y_abs annotation(
+        Placement(visible = true, transformation(origin = {-100, 40}, extent = {{-20, -20}, {20, 20}}, rotation = 0), iconTransformation(origin = {-92, 30}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
+  Modelica.Blocks.Interfaces.RealInput X_des annotation(
+        Placement(visible = true, transformation(origin = {-100, -40}, extent = {{-20, -20}, {20, 20}}, rotation = 0), iconTransformation(origin = {-92, -30}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
+  Modelica.Blocks.Interfaces.RealInput Y_des annotation(
+        Placement(visible = true, transformation(origin = {-100, -80}, extent = {{-20, -20}, {20, 20}}, rotation = 0), iconTransformation(origin = {-92, -70}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
+  Modelica.Blocks.Interfaces.RealInput Theta annotation(
+        Placement(visible = true, transformation(origin = {0, -100}, extent = {{-20, 20}, {20, -20}}, rotation = 90), iconTransformation(origin = {0, -90}, extent = {{-20, -20}, {20, 20}}, rotation = 90)));
+    parameter Real dTheta = 0.0;
+    Real x_err_internal;
+    Real y_err_internal;
+    Real Theta_internal;
+  Modelica.Blocks.Interfaces.RealOutput X_err annotation(
+        Placement(visible = true, transformation(origin = {88, 14}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {100, 12}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Blocks.Interfaces.RealOutput Y_err annotation(
+        Placement(visible = true, transformation(origin = {100, -12}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {100, -14}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    equation
+x_err_internal = X_des - X_abs;
+    y_err_internal = Y_des - Y_abs;
+    Theta_internal = Theta + dTheta;
+    X_err = x_err_internal;
+    Y_err = y_err_internal;
+    //X_err = cos(Theta_internal)*x_err_internal - sin(Theta_internal)*y_err_internal;
+    //Y_err = sin(Theta_internal)*x_err_internal + cos(Theta_internal)*y_err_internal;
+    annotation(
+        Icon(graphics = {Text(origin = {-32, -47}, extent = {{-34, 35}, {34, -35}}, textString = "Des"), Text(origin = {-29, 51}, extent = {{-33, 31}, {33, -31}}, textString = "Abs"), Text(origin = {45, 7}, extent = {{-33, 35}, {33, -35}}, textString = "Loc"), Text(origin = {42, -84}, extent = {{34, -20}, {-34, 20}}, textString = "Theta"), Rectangle(extent = {{-100, 100}, {100, -100}}), Text(origin = {85, 12}, extent = {{-3, 6}, {3, -6}}, textString = "x"), Text(origin = {85, -14}, extent = {{-3, 6}, {3, -6}}, textString = "y"), Text(origin = {-67, 70}, extent = {{-3, 6}, {3, -6}}, textString = "x"), Text(origin = {-69, 30}, extent = {{-3, 6}, {3, -6}}, textString = "y"), Text(origin = {-69, -28}, extent = {{-3, 6}, {3, -6}}, textString = "x"), Text(origin = {-69, -70}, extent = {{-3, 6}, {3, -6}}, textString = "y")}, coordinateSystem(extent = {{-100, -100}, {100, 100}})));
+end PositionDecoder;
+
+    QC.Controller.PositionDecoder positionDecoder annotation(
+      Placement(visible = true, transformation(origin = {-44, 22}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Blocks.Sources.Constant constant1(k = 0) annotation(
+      Placement(visible = true, transformation(origin = {-80, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Blocks.Continuous.LimPID limPID(controllerType = Modelica.Blocks.Types.SimpleController.PD, k = 1, wd = 0.5, wp = 0.001, yMax = 3) annotation(
+      Placement(visible = true, transformation(origin = {-10, 50}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Blocks.Continuous.LimPID limPID1(controllerType = Modelica.Blocks.Types.SimpleController.PD, k = 1, wd = 0.5, wp = 0.001, yMax = 3) annotation(
+      Placement(visible = true, transformation(origin = {-10, 20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Blocks.Sources.Constant constant2(k = 0.0) annotation(
+      Placement(visible = true, transformation(origin = {-44, 50}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Constant constant3(k = 0) annotation(
-      Placement(visible = true, transformation(origin = {0, 20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Blocks.Sources.Constant constant1(k = 0.1) annotation(
-      Placement(visible = true, transformation(origin = {38, -68}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+      Placement(visible = true, transformation(origin = {14, 48}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Blocks.Sources.Constant constant4(k = 0.1) annotation(
+      Placement(visible = true, transformation(origin = {-28, -90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   equation
     connect(motorMixingAlgorithm.RF, RF) annotation(
-      Line(points = {{70, 6}, {74, 6}, {74, 60}, {100, 60}}, color = {0, 0, 127}));
+      Line(points = {{84, 6}, {86, 6}, {86, 60}, {100, 60}}, color = {0, 0, 127}));
     connect(motorMixingAlgorithm.RB, RB) annotation(
-      Line(points = {{70, 2}, {80, 2}, {80, 20}, {100, 20}}, color = {0, 0, 127}));
+      Line(points = {{84, 2}, {88, 2}, {88, 20}, {100, 20}}, color = {0, 0, 127}));
     connect(motorMixingAlgorithm.LB, LB) annotation(
-      Line(points = {{70, -2}, {80, -2}, {80, -20}, {100, -20}}, color = {0, 0, 127}));
+      Line(points = {{84, -2}, {88, -2}, {88, -20}, {100, -20}}, color = {0, 0, 127}));
     connect(motorMixingAlgorithm.LF, LF) annotation(
-      Line(points = {{70, -6}, {74, -6}, {74, -60}, {100, -60}}, color = {0, 0, 127}));
+      Line(points = {{84, -6}, {86, -6}, {86, -60}, {100, -60}}, color = {0, 0, 127}));
     connect(des_hight.y, pid.u_s) annotation(
-      Line(points = {{-48, 80}, {-42, 80}}, color = {0, 0, 127}));
+      Line(points = {{-19, 90}, {-12, 90}}, color = {0, 0, 127}));
     connect(y, pid.u_m) annotation(
-      Line(points = {{-100, 50}, {-30, 50}, {-30, 68}}, color = {0, 0, 127}));
-    connect(const.y, add.u2) annotation(
-      Line(points = {{2, 50}, {4, 50}, {4, 54}, {8, 54}}, color = {0, 0, 127}));
+      Line(points = {{-100, 50}, {-100, 49}, {-74, 49}, {-74, 74}, {0, 74}, {0, 78}}, color = {0, 0, 127}));
+    connect(HoverThrustConst.y, add.u2) annotation(
+      Line(points = {{27, 78}, {32, 78}}, color = {0, 0, 127}));
     connect(pid.y, add.u1) annotation(
-      Line(points = {{-18, 80}, {-4, 80}, {-4, 66}, {8, 66}}, color = {0, 0, 127}));
+      Line(points = {{11, 90}, {32, 90}}, color = {0, 0, 127}));
     connect(add.y, motorMixingAlgorithm.T) annotation(
-      Line(points = {{32, 60}, {44, 60}, {44, 8}, {50, 8}}, color = {0, 0, 127}));
-  connect(const1.y, pid1.u_s) annotation(
-      Line(points = {{-49, 2}, {-42, 2}}, color = {0, 0, 127}));
-  connect(const2.y, limPID.u_s) annotation(
-      Line(points = {{-48, -36}, {-42, -36}}, color = {0, 0, 127}));
-  connect(const3.y, limPID1.u_s) annotation(
-      Line(points = {{-48, -68}, {-42, -68}}, color = {0, 0, 127}));
-  connect(pid1.y, motorMixingAlgorithm.R) annotation(
-      Line(points = {{-18, 2}, {50, 2}}, color = {0, 0, 127}));
-  connect(limPID.y, motorMixingAlgorithm.P) annotation(
-      Line(points = {{-18, -36}, {0, -36}, {0, -2}, {50, -2}}, color = {0, 0, 127}));
-  connect(b, pid1.u_m) annotation(
-      Line(points = {{-100, -50}, {-76, -50}, {-76, -16}, {-30, -16}, {-30, -10}}, color = {0, 0, 127}));
-  connect(limPID1.y, motorMixingAlgorithm.Y) annotation(
-      Line(points = {{-18, -68}, {12, -68}, {12, -8}, {50, -8}}, color = {0, 0, 127}));
-  connect(c, limPID.u_m) annotation(
-      Line(points = {{-100, -80}, {-72, -80}, {-72, -48}, {-30, -48}}, color = {0, 0, 127}));
-  connect(a, limPID1.u_m) annotation(
-      Line(points = {{-100, -20}, {-78, -20}, {-78, -92}, {-30, -92}, {-30, -80}}, color = {0, 0, 127}));
-  annotation(
-      __OpenModelica_simulationFlags(lv = "LOG_STATS", s = "dassl", variableFilter = ".*"));
-end Controller;
+      Line(points = {{55, 84}, {58, 84}, {58, 8}, {64, 8}}, color = {0, 0, 127}));
+    connect(const1.y, RollPID.u_s) annotation(
+      Line(points = {{21, -20}, {28, -20}}, color = {0, 0, 127}));
+    connect(RollPID.y, motorMixingAlgorithm.R) annotation(
+      Line(points = {{51, -20}, {52.5, -20}, {52.5, 3}, {64, 3}}, color = {0, 0, 127}));
+    connect(b, RollPID.u_m) annotation(
+      Line(points = {{-100, -50}, {-2, -50}, {-2, -36}, {40.25, -36}, {40.25, -32}, {40, -32}}, color = {0, 0, 127}));
+    connect(c, PitchPID.u_m) annotation(
+      Line(points = {{-100, -80}, {-2, -80}, {-2, -66}, {37.5, -66}, {37.5, -62}, {38, -62}}, color = {0, 0, 127}));
+    connect(a, YawPID1.u_m) annotation(
+      Line(points = {{-100, -20}, {-78, -20}, {-78, -96}, {37.5, -96}, {37.5, -92}, {38, -92}}, color = {0, 0, 127}));
+    connect(x, positionDecoder.X_abs) annotation(
+      Line(points = {{-100, 80}, {-70, 80}, {-70, 30}, {-54, 30}}, color = {0, 0, 127}));
+    connect(z, positionDecoder.Y_abs) annotation(
+      Line(points = {{-100, 20}, {-70, 20}, {-70, 26}, {-54, 26}}, color = {0, 0, 127}));
+    connect(constant1.y, positionDecoder.X_des) annotation(
+      Line(points = {{-69, 0}, {-64, 0}, {-64, 20}, {-54, 20}}, color = {0, 0, 127}));
+    connect(constant1.y, positionDecoder.Y_des) annotation(
+      Line(points = {{-69, 0}, {-64, 0}, {-64, 16}, {-54, 16}}, color = {0, 0, 127}));
+    connect(b, positionDecoder.Theta) annotation(
+      Line(points = {{-100, -50}, {-44, -50}, {-44, 14}}, color = {0, 0, 127}));
+    connect(constant2.y, limPID.u_s) annotation(
+      Line(points = {{-32, 50}, {-22, 50}}, color = {0, 0, 127}));
+    connect(constant2.y, limPID1.u_s) annotation(
+      Line(points = {{-32, 50}, {-26, 50}, {-26, 20}, {-22, 20}}, color = {0, 0, 127}));
+    connect(positionDecoder.X_err, limPID.u_m) annotation(
+      Line(points = {{-34, 24}, {-30, 24}, {-30, 38}, {-10, 38}}, color = {0, 0, 127}));
+    connect(positionDecoder.Y_err, limPID1.u_m) annotation(
+      Line(points = {{-34, 20}, {-30, 20}, {-30, 8}, {-10, 8}}, color = {0, 0, 127}));
+  connect(PitchPID.y, motorMixingAlgorithm.P) annotation(
+      Line(points = {{50, -50}, {56, -50}, {56, -2}, {64, -2}}, color = {0, 0, 127}));
+  connect(YawPID1.y, motorMixingAlgorithm.Y) annotation(
+      Line(points = {{50, -80}, {60, -80}, {60, -8}, {64, -8}}, color = {0, 0, 127}));
+  connect(constant3.y, PitchPID.u_s) annotation(
+      Line(points = {{25, 48}, {26, 48}, {26, -50}}, color = {0, 0, 127}));
+  connect(constant4.y, YawPID1.u_s) annotation(
+      Line(points = {{-16, -90}, {26, -90}, {26, -80}}, color = {0, 0, 127}));
+    annotation(
+      __OpenModelica_simulationFlags(lv = "LOG_STATS", s = "dassl", variableFilter = ".*"),
+      Diagram);
+  end Controller;
 
   model Wind
     Modelica.Mechanics.MultiBody.Interfaces.Frame_b frame_b annotation(
       Placement(visible = true, transformation(origin = {-100, 0}, extent = {{-16, -16}, {16, 16}}, rotation = 0), iconTransformation(origin = {-100, 0}, extent = {{-16, -16}, {16, 16}}, rotation = 0)));
     Modelica.Mechanics.MultiBody.Forces.WorldForce worldForce2(resolveInFrame = Modelica.Mechanics.MultiBody.Types.ResolveInFrameB.world) annotation(
       Placement(visible = true, transformation(origin = {-50, 0}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
-  Modelica.Blocks.Sources.CombiTimeTable combiTimeTable(table = [0, 0, 0, 0; 3, 0, 0.01, 0; 5, 0, 0.015, 0; 6, 0, 0.08, 0; 8, 0, 0.0, 0; 9, 0, -0.005, 0; 10, 0, 0, 0])  annotation(
+    Modelica.Blocks.Sources.CombiTimeTable combiTimeTable(table = [0, 0, 0, 0; 10, 0, 0, 0]) annotation(
       Placement(visible = true, transformation(origin = {0, 0}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
-  Modelica.Mechanics.MultiBody.Forces.WorldTorque torque(resolveInFrame = Modelica.Mechanics.MultiBody.Types.ResolveInFrameB.world)  annotation(
+    Modelica.Mechanics.MultiBody.Forces.WorldTorque torque(resolveInFrame = Modelica.Mechanics.MultiBody.Types.ResolveInFrameB.world) annotation(
       Placement(visible = true, transformation(origin = {-50, -30}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
-  Modelica.Blocks.Sources.CombiTimeTable combiTimeTable1(table = [0, 0, 0, 0; 3, 0, 0, 0; 5, 0.001, 0, 0; 6, 0, 0, 0; 8, 0, 0, 0; 9, 0, 0, 0; 10, 0, 0, 0]) annotation(
+    Modelica.Blocks.Sources.CombiTimeTable combiTimeTable1(table = [0, 0, 0, 0; 3, 0, 0, 0; 5, 0.001, 0, 0; 6, 0, 0, 0; 8, 0, 0, 0; 9, 0, 0, 0; 10, 0, 0, 0]) annotation(
       Placement(visible = true, transformation(origin = {0, -30}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
   equation
     connect(worldForce2.frame_b, frame_b) annotation(
       Line(points = {{-60, 0}, {-100, 0}}, color = {95, 95, 95}));
     connect(combiTimeTable.y, worldForce2.force) annotation(
       Line(points = {{-10, 0}, {-38, 0}}, color = {0, 0, 127}, thickness = 0.5));
-  connect(torque.frame_b, frame_b) annotation(
+    connect(torque.frame_b, frame_b) annotation(
       Line(points = {{-60, -30}, {-80, -30}, {-80, 0}, {-100, 0}}, color = {95, 95, 95}));
-  connect(torque.torque, combiTimeTable1.y) annotation(
+    connect(torque.torque, combiTimeTable1.y) annotation(
       Line(points = {{-38, -30}, {-10, -30}}, color = {0, 0, 127}, thickness = 0.5));
-  annotation(
+    annotation(
       Documentation,
-  __OpenModelica_simulationFlags(lv = "LOG_STATS", s = "dassl", variableFilter = ".*"),
-  Diagram(graphics = {Text(origin = {37, -29}, extent = {{-17, 13}, {17, -13}}, textString = "[x, y,z]")}));
-end Wind;
+      __OpenModelica_simulationFlags(lv = "LOG_STATS", s = "dassl", variableFilter = ".*"),
+      Diagram(graphics = {Text(origin = {37, -29}, extent = {{-17, 13}, {17, -13}}, textString = "[x, y,z]"), Text(origin = {56, 2}, extent = {{-32, 6}, {32, -6}}, textString = "[0, 0, 0, 0; 3, 0, 0.01, 0; 5, 0, 0.015, 0; 6, 0, 0.08, 0; 8, 0, 0.0, 0; 9, 0, -0.005, 0; 10, 0, 0, 0]")}));
+  end Wind;
   annotation(
     uses(Modelica(version = "4.0.0"), Modelica_DeviceDrivers(version = "2.1.1")));
 end QC;
