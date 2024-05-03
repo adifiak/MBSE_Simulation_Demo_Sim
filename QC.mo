@@ -1,56 +1,56 @@
 package QC
   model Quadcopter
     QC.Chasis chasis annotation(
-      Placement(visible = true, transformation(origin = {60, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+      Placement(visible = true, transformation(origin = {36, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     QC.RPU_CounterClockWise rPU_CounterClockWise annotation(
-      Placement(visible = true, transformation(origin = {24, 20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+      Placement(visible = true, transformation(origin = {0, 14}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     QC.RPU_CounterClockWise rPU_CounterClockWise1 annotation(
-      Placement(visible = true, transformation(origin = {24, -64}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+      Placement(visible = true, transformation(origin = {0, -42}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     inner Modelica.Mechanics.MultiBody.World world annotation(
       Placement(visible = true, transformation(origin = {80, 80}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     QC.RPU_ClockWise rPU_ClockWise annotation(
-      Placement(visible = true, transformation(origin = {24, 56}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+      Placement(visible = true, transformation(origin = {0, 42}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     QC.RPU_ClockWise rPU_ClockWise1 annotation(
-      Placement(visible = true, transformation(origin = {24, -24}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+      Placement(visible = true, transformation(origin = {0, -14}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     QC.Sensors sensors annotation(
-      Placement(visible = true, transformation(origin = {24, -88}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+      Placement(visible = true, transformation(origin = {0, -80}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     QC.Controller controller annotation(
-      Placement(visible = true, transformation(origin = {-30, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-    Wind wind annotation(
-      Placement(visible = true, transformation(origin = {80, 40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+      Placement(visible = true, transformation(origin = {-36, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    QC.Wind wind annotation(
+      Placement(visible = true, transformation(origin = {80, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   equation
     connect(controller.RF, rPU_ClockWise.u) annotation(
-      Line(points = {{-21, 7}, {-11, 7}, {-11, 55}, {13, 55}}, color = {0, 0, 127}));
+      Line(points = {{-27, 7}, {-19, 7}, {-19, 42}, {-10, 42}}, color = {0, 0, 127}));
     connect(controller.RB, rPU_CounterClockWise.u) annotation(
-      Line(points = {{-21, 2}, {-1, 2}, {-1, 20}, {13, 20}}, color = {0, 0, 127}));
+      Line(points = {{-27, 2}, {-15, 2}, {-15, 14}, {-10, 14}}, color = {0, 0, 127}));
     connect(controller.LB, rPU_ClockWise1.u) annotation(
-      Line(points = {{-21, -1.8}, {-1, -1.8}, {-1, -23.8}, {13, -23.8}}, color = {0, 0, 127}));
+      Line(points = {{-27, -2}, {-15, -2}, {-15, -14}, {-10, -14}}, color = {0, 0, 127}));
     connect(controller.LF, rPU_CounterClockWise1.u) annotation(
-      Line(points = {{-21, -6}, {-11, -6}, {-11, -64}, {13, -64}}, color = {0, 0, 127}));
+      Line(points = {{-27, -6}, {-19, -6}, {-19, -42}, {-10, -42}}, color = {0, 0, 127}));
     connect(sensors.x, controller.x) annotation(
-      Line(points = {{14, -81}, {-80, -81}, {-80, 9}, {-40, 9}}, color = {0, 0, 127}));
+      Line(points = {{-10, -73}, {-52, -73}, {-52, 10}, {-46, 10}}, color = {0, 0, 127}));
     connect(sensors.y, controller.y) annotation(
-      Line(points = {{14, -83}, {-82, -83}, {-82, 5}, {-40, 5}}, color = {0, 0, 127}));
+      Line(points = {{-10, -75}, {-56, -75}, {-56, 6}, {-46, 6}}, color = {0, 0, 127}));
     connect(sensors.z, controller.z) annotation(
-      Line(points = {{14, -85}, {-84, -85}, {-84, 1}, {-40, 1}}, color = {0, 0, 127}));
+      Line(points = {{-10, -77}, {-60, -77}, {-60, 2}, {-46, 2}}, color = {0, 0, 127}));
     connect(sensors.a, controller.a) annotation(
-      Line(points = {{14, -91}, {-90, -91}, {-90, -3}, {-40, -3}}, color = {0, 0, 127}));
+      Line(points = {{-10, -83}, {-66, -83}, {-66, -2}, {-46, -2}}, color = {0, 0, 127}));
     connect(sensors.b, controller.b) annotation(
-      Line(points = {{14, -93}, {-92, -93}, {-92, -7}, {-40, -7}}, color = {0, 0, 127}));
+      Line(points = {{-10, -85}, {-70, -85}, {-70, -6}, {-46, -6}}, color = {0, 0, 127}));
     connect(sensors.c, controller.c) annotation(
-      Line(points = {{14, -95}, {-94, -95}, {-94, -11}, {-40, -11}}, color = {0, 0, 127}));
+      Line(points = {{-10, -87}, {-74, -87}, {-74, -10}, {-46, -10}}, color = {0, 0, 127}));
     connect(rPU_ClockWise.frame_b, chasis.frame_RF) annotation(
-      Line(points = {{34, 56}, {44, 56}, {44, 8}, {50, 8}}, color = {95, 95, 95}));
+      Line(points = {{10, 42}, {20, 42}, {20, 8}, {26, 8}}, color = {95, 95, 95}));
     connect(rPU_CounterClockWise.frame_b, chasis.frame_a_RB) annotation(
-      Line(points = {{34, 20}, {38, 20}, {38, 2}, {50, 2}}, color = {95, 95, 95}));
+      Line(points = {{10, 14}, {16, 14}, {16, 3}, {26, 3}}, color = {95, 95, 95}));
     connect(rPU_ClockWise1.frame_b, chasis.frame_a_LB) annotation(
-      Line(points = {{34, -24}, {38, -24}, {38, -2}, {50, -2}}, color = {95, 95, 95}));
+      Line(points = {{10, -14}, {16, -14}, {16, -3}, {26, -3}}, color = {95, 95, 95}));
     connect(rPU_CounterClockWise1.frame_b, chasis.frame_a_LF) annotation(
-      Line(points = {{34, -64}, {44, -64}, {44, -8}, {50, -8}}));
+      Line(points = {{10, -42}, {20, -42}, {20, -8}, {26, -8}}));
     connect(chasis.frame_a4, sensors.frame_a) annotation(
-      Line(points = {{70, 0}, {80, 0}, {80, -88}, {34, -88}}, color = {95, 95, 95}));
+      Line(points = {{46, 0}, {60, 0}, {60, -80}, {10, -80}}, color = {95, 95, 95}));
     connect(wind.frame_b, chasis.frame_a4) annotation(
-      Line(points = {{70, 40}, {60, 40}, {60, 20}, {80, 20}, {80, 0}, {70, 0}}, color = {95, 95, 95}));
+      Line(points = {{70, 0}, {46, 0}}, color = {95, 95, 95}));
     annotation(
       __OpenModelica_simulationFlags(lv = "LOG_STATS", s = "dassl", variableFilter = ".*"));
   end Quadcopter;
@@ -355,50 +355,46 @@ package QC
       Placement(visible = true, transformation(origin = {38, -80}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
 
     model PositionDecoder
-  Modelica.Blocks.Interfaces.RealInput X_abs annotation(
+      Modelica.Blocks.Interfaces.RealInput X_abs annotation(
         Placement(visible = true, transformation(origin = {-100, 80}, extent = {{-20, -20}, {20, 20}}, rotation = 0), iconTransformation(origin = {-92, 70}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
-  Modelica.Blocks.Interfaces.RealInput Y_abs annotation(
+      Modelica.Blocks.Interfaces.RealInput Y_abs annotation(
         Placement(visible = true, transformation(origin = {-100, 40}, extent = {{-20, -20}, {20, 20}}, rotation = 0), iconTransformation(origin = {-92, 30}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
-  Modelica.Blocks.Interfaces.RealInput X_des annotation(
+      Modelica.Blocks.Interfaces.RealInput X_des annotation(
         Placement(visible = true, transformation(origin = {-100, -40}, extent = {{-20, -20}, {20, 20}}, rotation = 0), iconTransformation(origin = {-92, -30}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
-  Modelica.Blocks.Interfaces.RealInput Y_des annotation(
+      Modelica.Blocks.Interfaces.RealInput Y_des annotation(
         Placement(visible = true, transformation(origin = {-100, -80}, extent = {{-20, -20}, {20, 20}}, rotation = 0), iconTransformation(origin = {-92, -70}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
-  Modelica.Blocks.Interfaces.RealInput Theta annotation(
+      Modelica.Blocks.Interfaces.RealInput Theta annotation(
         Placement(visible = true, transformation(origin = {0, -100}, extent = {{-20, 20}, {20, -20}}, rotation = 90), iconTransformation(origin = {0, -90}, extent = {{-20, -20}, {20, 20}}, rotation = 90)));
-    parameter Real dTheta = 0.0;
-    Real x_err_internal;
-    Real y_err_internal;
-    Real Theta_internal;
-  Modelica.Blocks.Interfaces.RealOutput X_err annotation(
+      parameter Real dTheta = 0.0;
+      Real x_err_internal;
+      Real y_err_internal;
+      Real Theta_internal;
+      Modelica.Blocks.Interfaces.RealOutput X_err annotation(
         Placement(visible = true, transformation(origin = {88, 14}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {100, 12}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Blocks.Interfaces.RealOutput Y_err annotation(
+      Modelica.Blocks.Interfaces.RealOutput Y_err annotation(
         Placement(visible = true, transformation(origin = {100, -12}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {100, -14}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     equation
-x_err_internal = X_des - X_abs;
-    y_err_internal = Y_des - Y_abs;
-    Theta_internal = Theta + dTheta;
-    X_err = x_err_internal;
-    Y_err = y_err_internal;
-    //X_err = cos(Theta_internal)*x_err_internal - sin(Theta_internal)*y_err_internal;
-    //Y_err = sin(Theta_internal)*x_err_internal + cos(Theta_internal)*y_err_internal;
-    annotation(
+      x_err_internal = X_des - X_abs;
+      y_err_internal = Y_des - Y_abs;
+      Theta_internal = Theta + dTheta;
+      X_err = x_err_internal;
+      Y_err = y_err_internal;
+//X_err = cos(Theta_internal)*x_err_internal - sin(Theta_internal)*y_err_internal;
+//Y_err = sin(Theta_internal)*x_err_internal + cos(Theta_internal)*y_err_internal;
+      annotation(
         Icon(graphics = {Text(origin = {-32, -47}, extent = {{-34, 35}, {34, -35}}, textString = "Des"), Text(origin = {-29, 51}, extent = {{-33, 31}, {33, -31}}, textString = "Abs"), Text(origin = {45, 7}, extent = {{-33, 35}, {33, -35}}, textString = "Loc"), Text(origin = {42, -84}, extent = {{34, -20}, {-34, 20}}, textString = "Theta"), Rectangle(extent = {{-100, 100}, {100, -100}}), Text(origin = {85, 12}, extent = {{-3, 6}, {3, -6}}, textString = "x"), Text(origin = {85, -14}, extent = {{-3, 6}, {3, -6}}, textString = "y"), Text(origin = {-67, 70}, extent = {{-3, 6}, {3, -6}}, textString = "x"), Text(origin = {-69, 30}, extent = {{-3, 6}, {3, -6}}, textString = "y"), Text(origin = {-69, -28}, extent = {{-3, 6}, {3, -6}}, textString = "x"), Text(origin = {-69, -70}, extent = {{-3, 6}, {3, -6}}, textString = "y")}, coordinateSystem(extent = {{-100, -100}, {100, 100}})));
-end PositionDecoder;
+    end PositionDecoder;
 
     QC.Controller.PositionDecoder positionDecoder annotation(
       Placement(visible = true, transformation(origin = {-44, 22}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Blocks.Sources.Constant constant1(k = 0) annotation(
+    Modelica.Blocks.Sources.Constant constant1(k = 0) annotation(
       Placement(visible = true, transformation(origin = {-80, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Blocks.Continuous.LimPID limPID(controllerType = Modelica.Blocks.Types.SimpleController.PD, k = 1, wd = 0.5, wp = 0.001, yMax = 3) annotation(
+    Modelica.Blocks.Continuous.LimPID limPID(controllerType = Modelica.Blocks.Types.SimpleController.PD, k = 0.05, wd = 0.5, wp = 0.01, yMax = 0.05) annotation(
       Placement(visible = true, transformation(origin = {-10, 50}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Blocks.Continuous.LimPID limPID1(controllerType = Modelica.Blocks.Types.SimpleController.PD, k = 1, wd = 0.5, wp = 0.001, yMax = 3) annotation(
+    Modelica.Blocks.Continuous.LimPID limPID1(Td = 2.5,controllerType = Modelica.Blocks.Types.SimpleController.PD, k = -0.05, wd = 0.01, wp = 0.005, yMax = 0.05) annotation(
       Placement(visible = true, transformation(origin = {-10, 20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Blocks.Sources.Constant constant2(k = 0.0) annotation(
+    Modelica.Blocks.Sources.Constant constant2(k = 0.0) annotation(
       Placement(visible = true, transformation(origin = {-44, 50}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Blocks.Sources.Constant constant3(k = 0) annotation(
-      Placement(visible = true, transformation(origin = {14, 48}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Blocks.Sources.Constant constant4(k = 0.1) annotation(
-      Placement(visible = true, transformation(origin = {-28, -90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   equation
     connect(motorMixingAlgorithm.RF, RF) annotation(
       Line(points = {{84, 6}, {86, 6}, {86, 60}, {100, 60}}, color = {0, 0, 127}));
@@ -446,17 +442,17 @@ end PositionDecoder;
       Line(points = {{-34, 24}, {-30, 24}, {-30, 38}, {-10, 38}}, color = {0, 0, 127}));
     connect(positionDecoder.Y_err, limPID1.u_m) annotation(
       Line(points = {{-34, 20}, {-30, 20}, {-30, 8}, {-10, 8}}, color = {0, 0, 127}));
-  connect(PitchPID.y, motorMixingAlgorithm.P) annotation(
+    connect(PitchPID.y, motorMixingAlgorithm.P) annotation(
       Line(points = {{50, -50}, {56, -50}, {56, -2}, {64, -2}}, color = {0, 0, 127}));
-  connect(YawPID1.y, motorMixingAlgorithm.Y) annotation(
+    connect(YawPID1.y, motorMixingAlgorithm.Y) annotation(
       Line(points = {{50, -80}, {60, -80}, {60, -8}, {64, -8}}, color = {0, 0, 127}));
-  connect(constant3.y, PitchPID.u_s) annotation(
-      Line(points = {{25, 48}, {26, 48}, {26, -50}}, color = {0, 0, 127}));
-  connect(constant4.y, YawPID1.u_s) annotation(
-      Line(points = {{-16, -90}, {26, -90}, {26, -80}}, color = {0, 0, 127}));
+  connect(limPID.y, PitchPID.u_s) annotation(
+      Line(points = {{2, 50}, {12, 50}, {12, -4}, {-8, -4}, {-8, -56}, {26, -56}, {26, -50}}, color = {0, 0, 127}));
+  connect(limPID1.y, YawPID1.u_s) annotation(
+      Line(points = {{2, 20}, {8, 20}, {8, -2}, {-14, -2}, {-14, -72}, {26, -72}, {26, -80}}, color = {0, 0, 127}));
     annotation(
       __OpenModelica_simulationFlags(lv = "LOG_STATS", s = "dassl", variableFilter = ".*"),
-      Diagram);
+      Diagram(coordinateSystem(extent = {{-100, -100}, {100, 100}})));
   end Controller;
 
   model Wind
