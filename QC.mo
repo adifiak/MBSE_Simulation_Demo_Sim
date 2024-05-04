@@ -343,7 +343,7 @@ package QC
       Placement(visible = true, transformation(origin = {10, -20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     Modelica.Blocks.Continuous.LimPID pid(Td = 1.5, Ti = 1000, controllerType = Modelica.Blocks.Types.SimpleController.PID, initType = Modelica.Blocks.Types.Init.NoInit, k = 7, yMax = 10, yMin = -10, y_start = 0) annotation(
       Placement(visible = true, transformation(origin = {0, 90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-    Modelica.Blocks.Sources.Constant des_hight(k = 0.0) annotation(
+    Modelica.Blocks.Sources.Constant des_hight(k = 0.5) annotation(
       Placement(visible = true, transformation(origin = {-30, 90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     Modelica.Blocks.Math.Add add annotation(
       Placement(visible = true, transformation(origin = {44, 84}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
@@ -459,26 +459,26 @@ package QC
     Modelica.Mechanics.MultiBody.Interfaces.Frame_b frame_b annotation(
       Placement(visible = true, transformation(origin = {-100, 0}, extent = {{-16, -16}, {16, 16}}, rotation = 0), iconTransformation(origin = {-100, 0}, extent = {{-16, -16}, {16, 16}}, rotation = 0)));
     Modelica.Mechanics.MultiBody.Forces.WorldForce worldForce2(resolveInFrame = Modelica.Mechanics.MultiBody.Types.ResolveInFrameB.world) annotation(
-      Placement(visible = true, transformation(origin = {-50, 0}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
-    Modelica.Blocks.Sources.CombiTimeTable combiTimeTable(table = [0, 0, 0, 0; 10, 0, 0, 0]) annotation(
-      Placement(visible = true, transformation(origin = {0, 0}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
+      Placement(visible = true, transformation(origin = {-50, 14}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
+    Modelica.Blocks.Sources.CombiTimeTable ForceLUT(table = [0, 0, 0, 0; 3, 0.002, 0.01, -0.001; 5, 0.01, 0.015, 0.01; 6, 0, 0.004, -0.02; 8, -0.005, 0.0, 0.001; 9, 0.01, -0.005, 0; 10, 0, 0, 0; 100, 0, 0, 0]) annotation(
+      Placement(visible = true, transformation(origin = {30, 14}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
     Modelica.Mechanics.MultiBody.Forces.WorldTorque torque(resolveInFrame = Modelica.Mechanics.MultiBody.Types.ResolveInFrameB.world) annotation(
-      Placement(visible = true, transformation(origin = {-50, -30}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
-    Modelica.Blocks.Sources.CombiTimeTable combiTimeTable1(table = [0, 0, 0, 0; 3, 0, 0, 0; 5, 0.001, 0, 0; 6, 0, 0, 0; 8, 0, 0, 0; 9, 0, 0, 0; 10, 0, 0, 0]) annotation(
-      Placement(visible = true, transformation(origin = {0, -30}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
+      Placement(visible = true, transformation(origin = {-50, -14}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
+    Modelica.Blocks.Sources.CombiTimeTable TorqueLUT(table = [0, 0, 0, 0; 3, 0, -0.001, 0.001; 5, 0.001, 0, -0.001; 6, 0, 0.005, -0.002; 8, 0, 0.008, 0; 9, 0.001, -0.002, 0; 10, 0, 0, 0; 100, 0, 0, 0]) annotation(
+      Placement(visible = true, transformation(origin = {30, -14}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
   equation
     connect(worldForce2.frame_b, frame_b) annotation(
-      Line(points = {{-60, 0}, {-100, 0}}, color = {95, 95, 95}));
-    connect(combiTimeTable.y, worldForce2.force) annotation(
-      Line(points = {{-10, 0}, {-38, 0}}, color = {0, 0, 127}, thickness = 0.5));
+      Line(points = {{-60, 14}, {-80, 14}, {-80, 0}, {-100, 0}}, color = {95, 95, 95}));
     connect(torque.frame_b, frame_b) annotation(
-      Line(points = {{-60, -30}, {-80, -30}, {-80, 0}, {-100, 0}}, color = {95, 95, 95}));
-    connect(torque.torque, combiTimeTable1.y) annotation(
-      Line(points = {{-38, -30}, {-10, -30}}, color = {0, 0, 127}, thickness = 0.5));
+      Line(points = {{-60, -14}, {-80, -14}, {-80, 0}, {-100, 0}}, color = {95, 95, 95}));
+  connect(TorqueLUT.y, torque.torque) annotation(
+      Line(points = {{20, -14}, {-38, -14}}, color = {0, 0, 127}, thickness = 0.5));
+  connect(ForceLUT.y, worldForce2.force) annotation(
+      Line(points = {{20, 14}, {-38, 14}}, color = {0, 0, 127}, thickness = 0.5));
     annotation(
       Documentation,
       __OpenModelica_simulationFlags(lv = "LOG_STATS", s = "dassl", variableFilter = ".*"),
-      Diagram(graphics = {Text(origin = {37, -29}, extent = {{-17, 13}, {17, -13}}, textString = "[x, y,z]"), Text(origin = {56, 2}, extent = {{-32, 6}, {32, -6}}, textString = "[0, 0, 0, 0; 3, 0, 0.01, 0; 5, 0, 0.015, 0; 6, 0, 0.08, 0; 8, 0, 0.0, 0; 9, 0, -0.005, 0; 10, 0, 0, 0]")}));
+      Diagram(graphics = {Text(origin = {51, -10}, extent = {{-11, 8}, {11, -8}}, textString = "[x, y, z]")}, coordinateSystem(extent = {{-100, -100}, {100, 100}})));
   end Wind;
   annotation(
     uses(Modelica(version = "4.0.0"), Modelica_DeviceDrivers(version = "2.1.1")));
