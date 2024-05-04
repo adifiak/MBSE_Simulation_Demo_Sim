@@ -389,7 +389,7 @@ package QC
       Placement(visible = true, transformation(origin = {-44, 22}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     Modelica.Blocks.Sources.Constant constant1(k = 0) annotation(
       Placement(visible = true, transformation(origin = {-80, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-    Modelica.Blocks.Continuous.LimPID limPID(controllerType = Modelica.Blocks.Types.SimpleController.PD, k = 0.05, wd = 0.5, wp = 0.01, yMax = 0.05) annotation(
+    Modelica.Blocks.Continuous.LimPID limPID(Td = 2.5,controllerType = Modelica.Blocks.Types.SimpleController.PD, k = 0.05, wd = 0.01, wp = 0.005, yMax = 0.05) annotation(
       Placement(visible = true, transformation(origin = {-10, 50}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     Modelica.Blocks.Continuous.LimPID limPID1(Td = 2.5,controllerType = Modelica.Blocks.Types.SimpleController.PD, k = -0.05, wd = 0.01, wp = 0.005, yMax = 0.05) annotation(
       Placement(visible = true, transformation(origin = {-10, 20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
