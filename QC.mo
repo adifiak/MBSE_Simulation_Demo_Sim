@@ -6,8 +6,6 @@ package QC
       Placement(visible = true, transformation(origin = {0, 14}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     QC.RPU_CounterClockWise rPU_CounterClockWise1 annotation(
       Placement(visible = true, transformation(origin = {0, -42}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-    inner Modelica.Mechanics.MultiBody.World world annotation(
-      Placement(visible = true, transformation(origin = {80, 80}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     QC.RPU_ClockWise rPU_ClockWise annotation(
       Placement(visible = true, transformation(origin = {0, 42}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     QC.RPU_ClockWise rPU_ClockWise1 annotation(
@@ -16,8 +14,8 @@ package QC
       Placement(visible = true, transformation(origin = {0, -80}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     QC.Controller controller annotation(
       Placement(visible = true, transformation(origin = {-36, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-    QC.Wind wind annotation(
-      Placement(visible = true, transformation(origin = {80, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Mechanics.MultiBody.Interfaces.Frame_a Wind annotation(
+      Placement(transformation(origin = {100, 0}, extent = {{-16, -16}, {16, 16}}), iconTransformation(origin = {100, 0}, extent = {{-16, -16}, {16, 16}})));
   equation
     connect(controller.RF, rPU_ClockWise.u) annotation(
       Line(points = {{-27, 7}, {-19, 7}, {-19, 42}, {-10, 42}}, color = {0, 0, 127}));
@@ -39,18 +37,28 @@ package QC
       Line(points = {{-10, -85}, {-70, -85}, {-70, -6}, {-46, -6}}, color = {0, 0, 127}));
     connect(sensors.c, controller.c) annotation(
       Line(points = {{-10, -87}, {-74, -87}, {-74, -10}, {-46, -10}}, color = {0, 0, 127}));
-    connect(rPU_ClockWise.frame_b, chasis.frame_RF) annotation(
+    connect(rPU_ClockWise.frame_b, chasis.RF_MotorMount) annotation(
       Line(points = {{10, 42}, {20, 42}, {20, 8}, {26, 8}}, color = {95, 95, 95}));
-    connect(rPU_CounterClockWise.frame_b, chasis.frame_a_RB) annotation(
+    connect(rPU_CounterClockWise.frame_b, chasis.RB_MotorMount) annotation(
       Line(points = {{10, 14}, {16, 14}, {16, 3}, {26, 3}}, color = {95, 95, 95}));
-    connect(rPU_ClockWise1.frame_b, chasis.frame_a_LB) annotation(
+    connect(rPU_ClockWise1.frame_b, chasis.LB_MotorMount) annotation(
       Line(points = {{10, -14}, {16, -14}, {16, -3}, {26, -3}}, color = {95, 95, 95}));
-    connect(rPU_CounterClockWise1.frame_b, chasis.frame_a_LF) annotation(
+    connect(rPU_CounterClockWise1.frame_b, chasis.LF_MotorMount) annotation(
       Line(points = {{10, -42}, {20, -42}, {20, -8}, {26, -8}}));
-    connect(chasis.frame_a4, sensors.frame_a) annotation(
+    connect(chasis.SensorMount, sensors.frame_a) annotation(
       Line(points = {{46, 0}, {60, 0}, {60, -80}, {10, -80}}, color = {95, 95, 95}));
-    connect(wind.frame_b, chasis.frame_a4) annotation(
-      Line(points = {{70, 0}, {46, 0}}, color = {95, 95, 95}));
+  connect(rPU_ClockWise.frame_b, chasis.RF_MotorMount) annotation(
+      Line(points = {{10, 42}, {20, 42}, {20, 7}, {26, 7}, {26, 8}}, color = {95, 95, 95}));
+  connect(rPU_CounterClockWise.frame_b, chasis.RB_MotorMount) annotation(
+      Line(points = {{10, 14}, {16, 14}, {16, 2}, {26, 2}}, color = {95, 95, 95}));
+  connect(rPU_ClockWise1.frame_b, chasis.LB_MotorMount) annotation(
+      Line(points = {{10, -14}, {16, -14}, {16, -2}, {26, -2}}, color = {95, 95, 95}));
+  connect(rPU_CounterClockWise1.frame_b, chasis.LF_MotorMount) annotation(
+      Line(points = {{10, -42}, {20, -42}, {20, -8}, {26, -8}}, color = {95, 95, 95}));
+  connect(chasis.SensorMount, sensors.frame_a) annotation(
+      Line(points = {{46, -4}, {60, -4}, {60, -80}, {10, -80}}, color = {95, 95, 95}));
+  connect(chasis.WindEffects, Wind) annotation(
+      Line(points = {{46, 4}, {80, 4}, {80, 0}, {100, 0}}, color = {95, 95, 95}));
     annotation(
       __OpenModelica_simulationFlags(lv = "LOG_STATS", s = "dassl", variableFilter = ".*"));
   end Quadcopter;
@@ -64,26 +72,28 @@ package QC
       Placement(visible = true, transformation(origin = {-50, -20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     Modelica.Mechanics.MultiBody.Parts.BodyShape bodyShape3(m = 0.01, r = {-0.1, 0, 0.1}) annotation(
       Placement(visible = true, transformation(origin = {-50, -60}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-    Modelica.Mechanics.MultiBody.Interfaces.Frame_a frame_RF annotation(
+    Modelica.Mechanics.MultiBody.Interfaces.Frame_a RF_MotorMount annotation(
       Placement(visible = true, transformation(origin = {-100, 60}, extent = {{-16, -16}, {16, 16}}, rotation = 0), iconTransformation(origin = {-100, 76}, extent = {{-16, -16}, {16, 16}}, rotation = 0)));
-    Modelica.Mechanics.MultiBody.Interfaces.Frame_a frame_a_RB annotation(
+    Modelica.Mechanics.MultiBody.Interfaces.Frame_a RB_MotorMount annotation(
       Placement(visible = true, transformation(origin = {-100, 20}, extent = {{-16, -16}, {16, 16}}, rotation = 0), iconTransformation(origin = {-100, 28}, extent = {{-16, -16}, {16, 16}}, rotation = 0)));
-    Modelica.Mechanics.MultiBody.Interfaces.Frame_a frame_a_LB annotation(
+    Modelica.Mechanics.MultiBody.Interfaces.Frame_a LB_MotorMount annotation(
       Placement(visible = true, transformation(origin = {-100, -20}, extent = {{-16, -16}, {16, 16}}, rotation = 0), iconTransformation(origin = {-100, -26}, extent = {{-16, -16}, {16, 16}}, rotation = 0)));
-    Modelica.Mechanics.MultiBody.Interfaces.Frame_a frame_a_LF annotation(
+    Modelica.Mechanics.MultiBody.Interfaces.Frame_a LF_MotorMount annotation(
       Placement(visible = true, transformation(origin = {-100, -60}, extent = {{-16, -16}, {16, 16}}, rotation = 0), iconTransformation(origin = {-100, -76}, extent = {{-16, -16}, {16, 16}}, rotation = 0)));
     Modelica.Mechanics.MultiBody.Parts.Body body(animation = true, m = 0.3, sphereDiameter = 0.04) annotation(
       Placement(visible = true, transformation(origin = {0, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-    Modelica.Mechanics.MultiBody.Interfaces.Frame_a frame_a4 annotation(
-      Placement(visible = true, transformation(origin = {100, 0}, extent = {{-16, -16}, {16, 16}}, rotation = 0), iconTransformation(origin = {100, 0}, extent = {{-16, -16}, {16, 16}}, rotation = 0)));
+    Modelica.Mechanics.MultiBody.Interfaces.Frame_a SensorMount annotation(
+      Placement(transformation(origin = {100, -50}, extent = {{-16, -16}, {16, 16}}), iconTransformation(origin = {100, -50}, extent = {{-16, -16}, {16, 16}})));
+    Modelica.Mechanics.MultiBody.Interfaces.Frame_a WindEffects annotation(
+      Placement(transformation(origin = {100, 50}, extent = {{-16, -16}, {16, 16}}), iconTransformation(origin = {98, 48}, extent = {{-16, -16}, {16, 16}})));
   equation
-    connect(bodyShape.frame_a, frame_RF) annotation(
+    connect(bodyShape.frame_a, RF_MotorMount) annotation(
       Line(points = {{-60, 60}, {-100, 60}}));
-    connect(frame_a_RB, bodyShape1.frame_a) annotation(
+    connect(RB_MotorMount, bodyShape1.frame_a) annotation(
       Line(points = {{-100, 20}, {-60, 20}}));
-    connect(bodyShape2.frame_a, frame_a_LB) annotation(
+    connect(bodyShape2.frame_a, LB_MotorMount) annotation(
       Line(points = {{-60, -20}, {-100, -20}}, color = {95, 95, 95}));
-    connect(bodyShape3.frame_a, frame_a_LF) annotation(
+    connect(bodyShape3.frame_a, LF_MotorMount) annotation(
       Line(points = {{-60, -60}, {-100, -60}}, color = {95, 95, 95}));
     connect(body.frame_a, bodyShape3.frame_b) annotation(
       Line(points = {{-10, 0}, {-20, 0}, {-20, -44}, {-19, -44}, {-19, -60}, {-40, -60}}, color = {95, 95, 95}));
@@ -93,9 +103,13 @@ package QC
       Line(points = {{-10, 0}, {-25, 0}, {-25, 20}, {-28, 20}, {-28, 21}, {-34, 21}, {-34, 20.5}, {-40, 20.5}, {-40, 20}}, color = {95, 95, 95}));
     connect(body.frame_a, bodyShape.frame_b) annotation(
       Line(points = {{-10, 0}, {-20, 0}, {-20, 61}, {-40, 61}, {-40, 60}}, color = {95, 95, 95}));
-    connect(body.frame_a, frame_a4) annotation(
-      Line(points = {{-10, 0}, {100, 0}}, color = {95, 95, 95}));
-  end Chasis;
+    connect(body.frame_a, SensorMount) annotation(
+      Line(points = {{-10, 0}, {43, 0}, {43, -50}, {100, -50}}, color = {95, 95, 95}));
+  connect(body.frame_a, WindEffects) annotation(
+      Line(points = {{-10, 0}, {44, 0}, {44, 49}, {100, 49}, {100, 50}}, color = {95, 95, 95}));
+  annotation(
+      Icon(graphics = {Rectangle(fillColor = {170, 255, 255}, fillPattern = FillPattern.Solid, extent = {{-100, 100}, {100, -100}}), Text(origin = {-70, 74}, extent = {{-14, 12}, {14, -12}}, textString = "RF"), Text(origin = {-69, 31}, extent = {{-13, 13}, {13, -13}}, textString = "RB"), Text(origin = {-69, -26}, extent = {{-11, 14}, {11, -14}}, textString = "LB"), Text(origin = {-69, -74}, extent = {{-11, 12}, {11, -12}}, textString = "LF"), Text(origin = {73, 48}, extent = {{-13, 12}, {13, -12}}, textString = "W"), Text(origin = {71, -48}, extent = {{13, 12}, {-13, -12}}, textString = "S")}));
+end Chasis;
 
   model RotaryPropultionUnit
     Modelica.Mechanics.MultiBody.Parts.Body body(m = 0.05, sphereDiameter = 0.05) annotation(
@@ -389,9 +403,9 @@ package QC
       Placement(visible = true, transformation(origin = {-44, 22}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     Modelica.Blocks.Sources.Constant constant1(k = 0) annotation(
       Placement(visible = true, transformation(origin = {-80, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-    Modelica.Blocks.Continuous.LimPID limPID(Td = 2.5,controllerType = Modelica.Blocks.Types.SimpleController.PD, k = 0.05, wd = 0.01, wp = 0.005, yMax = 0.05) annotation(
+    Modelica.Blocks.Continuous.LimPID limPID(Td = 2.5, controllerType = Modelica.Blocks.Types.SimpleController.PD, k = 0.05, wd = 0.01, wp = 0.005, yMax = 0.05) annotation(
       Placement(visible = true, transformation(origin = {-10, 50}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-    Modelica.Blocks.Continuous.LimPID limPID1(Td = 2.5,controllerType = Modelica.Blocks.Types.SimpleController.PD, k = -0.05, wd = 0.01, wp = 0.005, yMax = 0.05) annotation(
+    Modelica.Blocks.Continuous.LimPID limPID1(Td = 2.5, controllerType = Modelica.Blocks.Types.SimpleController.PD, k = -0.05, wd = 0.01, wp = 0.005, yMax = 0.05) annotation(
       Placement(visible = true, transformation(origin = {-10, 20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     Modelica.Blocks.Sources.Constant constant2(k = 0.0) annotation(
       Placement(visible = true, transformation(origin = {-44, 50}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
@@ -446,9 +460,9 @@ package QC
       Line(points = {{50, -50}, {56, -50}, {56, -2}, {64, -2}}, color = {0, 0, 127}));
     connect(YawPID1.y, motorMixingAlgorithm.Y) annotation(
       Line(points = {{50, -80}, {60, -80}, {60, -8}, {64, -8}}, color = {0, 0, 127}));
-  connect(limPID.y, PitchPID.u_s) annotation(
+    connect(limPID.y, PitchPID.u_s) annotation(
       Line(points = {{2, 50}, {12, 50}, {12, -4}, {-8, -4}, {-8, -56}, {26, -56}, {26, -50}}, color = {0, 0, 127}));
-  connect(limPID1.y, YawPID1.u_s) annotation(
+    connect(limPID1.y, YawPID1.u_s) annotation(
       Line(points = {{2, 20}, {8, 20}, {8, -2}, {-14, -2}, {-14, -72}, {26, -72}, {26, -80}}, color = {0, 0, 127}));
     annotation(
       __OpenModelica_simulationFlags(lv = "LOG_STATS", s = "dassl", variableFilter = ".*"),
@@ -471,15 +485,27 @@ package QC
       Line(points = {{-60, 14}, {-80, 14}, {-80, 0}, {-100, 0}}, color = {95, 95, 95}));
     connect(torque.frame_b, frame_b) annotation(
       Line(points = {{-60, -14}, {-80, -14}, {-80, 0}, {-100, 0}}, color = {95, 95, 95}));
-  connect(TorqueLUT.y, torque.torque) annotation(
+    connect(TorqueLUT.y, torque.torque) annotation(
       Line(points = {{20, -14}, {-38, -14}}, color = {0, 0, 127}, thickness = 0.5));
-  connect(ForceLUT.y, worldForce2.force) annotation(
+    connect(ForceLUT.y, worldForce2.force) annotation(
       Line(points = {{20, 14}, {-38, 14}}, color = {0, 0, 127}, thickness = 0.5));
     annotation(
       Documentation,
       __OpenModelica_simulationFlags(lv = "LOG_STATS", s = "dassl", variableFilter = ".*"),
       Diagram(graphics = {Text(origin = {51, -10}, extent = {{-11, 8}, {11, -8}}, textString = "[x, y, z]")}, coordinateSystem(extent = {{-100, -100}, {100, 100}})));
   end Wind;
+
+  model MulticopterSystemContext
+  Quadcopter quadcopter annotation(
+      Placement(transformation(extent = {{-10, -10}, {10, 10}})));
+  inner Modelica.Mechanics.MultiBody.World world annotation(
+      Placement(transformation(origin = {80, 60}, extent = {{-10, -10}, {10, 10}})));
+  Wind wind annotation(
+      Placement(transformation(origin = {80, 0}, extent = {{-10, -10}, {10, 10}})));
+  equation
+  connect(quadcopter.Wind, wind.frame_b) annotation(
+      Line(points = {{10, 0}, {70, 0}}, color = {95, 95, 95}));
+  end MulticopterSystemContext;
   annotation(
     uses(Modelica(version = "4.0.0"), Modelica_DeviceDrivers(version = "2.1.1")));
 end QC;
