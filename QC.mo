@@ -25,12 +25,6 @@ package QC
       Line(points = {{-27, -2}, {-15, -2}, {-15, -14}, {-10, -14}}, color = {0, 0, 127}));
     connect(controller.LF, rPU_CounterClockWise1.u) annotation(
       Line(points = {{-27, -6}, {-19, -6}, {-19, -42}, {-10, -42}}, color = {0, 0, 127}));
-    connect(sensors.a, controller.a) annotation(
-      Line(points = {{-10, -83}, {-66, -83}, {-66, -2}, {-46, -2}}, color = {0, 0, 127}));
-    connect(sensors.b, controller.b) annotation(
-      Line(points = {{-10, -85}, {-70, -85}, {-70, -6}, {-46, -6}}, color = {0, 0, 127}));
-    connect(sensors.c, controller.c) annotation(
-      Line(points = {{-10, -87}, {-74, -87}, {-74, -10}, {-46, -10}}, color = {0, 0, 127}));
     connect(rPU_ClockWise.frame_b, chasis.RF_MotorMount) annotation(
       Line(points = {{10, 42}, {20, 42}, {20, 8}, {26, 8}}, color = {95, 95, 95}));
     connect(rPU_CounterClockWise.frame_b, chasis.RB_MotorMount) annotation(
@@ -53,8 +47,10 @@ package QC
       Line(points = {{46, -4}, {60, -4}, {60, -80}, {10, -80}}, color = {95, 95, 95}));
     connect(chasis.WindEffects, Wind) annotation(
       Line(points = {{46, 4}, {80, 4}, {80, 0}, {100, 0}}, color = {95, 95, 95}));
-  connect(sensors.Position, controller.position) annotation(
+    connect(sensors.Position, controller.position) annotation(
       Line(points = {{-10, -74}, {-80, -74}, {-80, 6}, {-46, 6}}, color = {0, 0, 127}, thickness = 0.5));
+  connect(sensors.Attitude, controller.attitude) annotation(
+      Line(points = {{-10, -84}, {-58, -84}, {-58, -4}, {-46, -4}}, color = {0, 0, 127}, thickness = 0.5));
     annotation(
       __OpenModelica_simulationFlags(lv = "LOG_STATS", s = "dassl", variableFilter = ".*"));
   end Quadcopter;
@@ -198,42 +194,26 @@ package QC
       Placement(visible = true, transformation(origin = {0, -40}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
     Modelica.Mechanics.MultiBody.Sensors.AbsolutePosition absolutePosition annotation(
       Placement(visible = true, transformation(origin = {0, 40}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
-    Modelica.Blocks.Interfaces.RealOutput a annotation(
-      Placement(visible = true, transformation(origin = {-98, -22}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {-100, -30}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
-    Modelica.Blocks.Interfaces.RealOutput b annotation(
-      Placement(visible = true, transformation(origin = {-98, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {-100, -50}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
-    Modelica.Blocks.Interfaces.RealOutput c annotation(
-      Placement(visible = true, transformation(origin = {-100, -60}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {-100, -70}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
-    Modelica.Blocks.Routing.DeMultiplex demux1(n = 3) annotation(
-      Placement(visible = true, transformation(origin = {-40, -40}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
     Modelica.Blocks.Interfaces.RealOutput Position[3] annotation(
       Placement(transformation(origin = {-106, 40}, extent = {{-10, -10}, {10, 10}}, rotation = 180), iconTransformation(origin = {-102, 50}, extent = {{-10, -10}, {10, 10}}, rotation = 180)));
+    Modelica.Blocks.Interfaces.RealOutput Attitude[3] annotation(
+      Placement(transformation(origin = {-106, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 180), iconTransformation(origin = {-104, -50}, extent = {{-10, -10}, {10, 10}}, rotation = 180)));
   equation
     connect(absolutePosition.frame_a, frame_a) annotation(
       Line(points = {{10, 40}, {40, 40}, {40, 0}, {100, 0}}));
     connect(absoluteAngles.frame_a, frame_a) annotation(
       Line(points = {{10, -40}, {40, -40}, {40, 0}, {100, 0}}, color = {95, 95, 95}));
-    connect(absoluteAngles.angles, demux1.u) annotation(
-      Line(points = {{-10, -40}, {-28, -40}}, color = {0, 0, 127}, thickness = 0.5));
-    connect(demux1.y[1], a) annotation(
-      Line(points = {{-50, -40}, {-70, -40}, {-70, -22}, {-98, -22}}, color = {0, 0, 127}));
-    connect(demux1.y[2], b) annotation(
-      Line(points = {{-50, -40}, {-98, -40}}, color = {0, 0, 127}));
-    connect(demux1.y[3], c) annotation(
-      Line(points = {{-50, -40}, {-70, -40}, {-70, -60}, {-100, -60}}, color = {0, 0, 127}));
     connect(absolutePosition.r, Position) annotation(
       Line(points = {{-10, 40}, {-106, 40}}, color = {0, 0, 127}, thickness = 0.5));
+    connect(absoluteAngles.angles, Attitude) annotation(
+      Line(points = {{-10, -40}, {-106, -40}}, color = {0, 0, 127}, thickness = 0.5));
   end Sensors;
 
   model Controller
     Modelica.Blocks.Interfaces.RealInput position[3] annotation(
       Placement(transformation(origin = {-100, 58}, extent = {{-20, -20}, {20, 20}}), iconTransformation(origin = {-100, 50}, extent = {{-20, -20}, {20, 20}})));
-    Modelica.Blocks.Interfaces.RealInput a annotation(
-      Placement(visible = true, transformation(origin = {-100, -20}, extent = {{-20, -20}, {20, 20}}, rotation = 0), iconTransformation(origin = {-100, -20}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
-    Modelica.Blocks.Interfaces.RealInput b annotation(
-      Placement(visible = true, transformation(origin = {-100, -50}, extent = {{-20, -20}, {20, 20}}, rotation = 0), iconTransformation(origin = {-100, -60}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
-    Modelica.Blocks.Interfaces.RealInput c annotation(
-      Placement(visible = true, transformation(origin = {-100, -80}, extent = {{-20, -20}, {20, 20}}, rotation = 0), iconTransformation(origin = {-100, -100}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
+    Modelica.Blocks.Interfaces.RealInput attitude[3] annotation(
+      Placement(transformation(origin = {-102, -90}, extent = {{-20, -20}, {20, 20}}), iconTransformation(origin = {-98, -50}, extent = {{-20, -20}, {20, 20}})));
     Modelica.Blocks.Interfaces.RealOutput RF annotation(
       Placement(visible = true, transformation(origin = {100, 60}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {90, 70}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     Modelica.Blocks.Interfaces.RealOutput RB annotation(
@@ -389,7 +369,6 @@ package QC
       Placement(visible = true, transformation(origin = {-10, 20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     Modelica.Blocks.Sources.Constant constant2(k = 0.0) annotation(
       Placement(transformation(origin = {-44, 50}, extent = {{-10, -10}, {10, 10}})));
-    
   equation
     connect(motorMixingAlgorithm.RF, RF) annotation(
       Line(points = {{84, 6}, {86, 6}, {86, 60}, {100, 60}}, color = {0, 0, 127}));
@@ -411,18 +390,10 @@ package QC
       Line(points = {{21, -20}, {28, -20}}, color = {0, 0, 127}));
     connect(RollPID.y, motorMixingAlgorithm.R) annotation(
       Line(points = {{51, -20}, {52.5, -20}, {52.5, 3}, {64, 3}}, color = {0, 0, 127}));
-    connect(b, RollPID.u_m) annotation(
-      Line(points = {{-100, -50}, {-2, -50}, {-2, -36}, {40.25, -36}, {40.25, -32}, {40, -32}}, color = {0, 0, 127}));
-    connect(c, PitchPID.u_m) annotation(
-      Line(points = {{-100, -80}, {-2, -80}, {-2, -66}, {37.5, -66}, {37.5, -62}, {38, -62}}, color = {0, 0, 127}));
-    connect(a, YawPID1.u_m) annotation(
-      Line(points = {{-100, -20}, {-78, -20}, {-78, -96}, {37.5, -96}, {37.5, -92}, {38, -92}}, color = {0, 0, 127}));
     connect(constant1.y, positionDecoder.X_des) annotation(
       Line(points = {{-69, 0}, {-64, 0}, {-64, 20}, {-54, 20}}, color = {0, 0, 127}));
     connect(constant1.y, positionDecoder.Y_des) annotation(
       Line(points = {{-69, 0}, {-64, 0}, {-64, 16}, {-54, 16}}, color = {0, 0, 127}));
-    connect(b, positionDecoder.Theta) annotation(
-      Line(points = {{-100, -50}, {-44, -50}, {-44, 14}}, color = {0, 0, 127}));
     connect(constant2.y, limPID.u_s) annotation(
       Line(points = {{-33, 50}, {-22, 50}}, color = {0, 0, 127}));
     connect(constant2.y, limPID1.u_s) annotation(
@@ -439,12 +410,20 @@ package QC
       Line(points = {{1, 50}, {11, 50}, {11, -4}, {-8, -4}, {-8, -56}, {26, -56}, {26, -50}}, color = {0, 0, 127}));
     connect(limPID1.y, YawPID1.u_s) annotation(
       Line(points = {{2, 20}, {8, 20}, {8, -2}, {-14, -2}, {-14, -72}, {26, -72}, {26, -80}}, color = {0, 0, 127}));
-  connect(position[1], positionDecoder.X_abs) annotation(
+    connect(position[1], positionDecoder.X_abs) annotation(
       Line(points = {{-100, 58}, {-100, 58.6875}, {-70, 58.6875}, {-70, 28}, {-54, 28}, {-54, 30}}, color = {0, 0, 127}));
-  connect(position[2], pid.u_m) annotation(
+    connect(position[2], pid.u_m) annotation(
       Line(points = {{-100, 58}, {-70, 58}, {-70, 68}, {0, 68}, {0, 78}}, color = {0, 0, 127}));
-  connect(position[3], positionDecoder.Y_abs) annotation(
+    connect(position[3], positionDecoder.Y_abs) annotation(
       Line(points = {{-100, 58}, {-100, 59}, {-72, 59}, {-72, 26}, {-54, 26}}, color = {0, 0, 127}));
+    connect(attitude[1], YawPID1.u_m) annotation(
+      Line(points = {{-102, -90}, {-90, -90}, {-90, -98}, {38, -98}, {38, -92}}, color = {0, 0, 127}));
+    connect(attitude[2], RollPID.u_m) annotation(
+      Line(points = {{-102, -90}, {-91.5, -90}, {-91.5, -88}, {-91, -88}, {-91, -84}, {-44, -84}, {-44, -36}, {40, -36}, {40, -32}}, color = {0, 0, 127}));
+    connect(attitude[2], positionDecoder.Theta) annotation(
+      Line(points = {{-102, -90}, {-91, -90}, {-91, -84}, {-44, -84}, {-44, 14}}, color = {0, 0, 127}));
+    connect(attitude[3], PitchPID.u_m) annotation(
+      Line(points = {{-102, -90}, {-36, -90}, {-36, -62}, {38, -62}}, color = {0, 0, 127}));
     annotation(
       __OpenModelica_simulationFlags(lv = "LOG_STATS", s = "dassl", variableFilter = ".*"),
       Diagram(coordinateSystem(extent = {{-100, -100}, {100, 100}})));
