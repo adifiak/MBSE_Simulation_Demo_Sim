@@ -7,13 +7,13 @@ package QC
     QC.RPU_ClockWise rPU_ClockWise1 annotation(
       Placement(visible = true, transformation(origin = {0, -14}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     QC.Sensors sensors annotation(
-      Placement(visible = true, transformation(origin = {0, -80}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+      Placement(transformation(origin = {0, -70}, extent = {{-10, -10}, {10, 10}})));
     QC.Controller controller annotation(
-      Placement(visible = true, transformation(origin = {-36, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+      Placement(transformation(origin = {-36, 0}, extent = {{-10, -10}, {10, 10}})));
     Modelica.Blocks.Interfaces.RealInput F_Wind[3] annotation(
-      Placement(transformation(origin = {100, 40}, extent = {{20, -20}, {-20, 20}}), iconTransformation(origin = {100, 40}, extent = {{20, -20}, {-20, 20}}, rotation = -0)));
+      Placement(transformation(origin = {88, 40}, extent = {{20, -20}, {-20, 20}}), iconTransformation(origin = {100, 40}, extent = {{20, -20}, {-20, 20}})));
     Modelica.Blocks.Interfaces.RealInput T_Wind[3] annotation(
-      Placement(transformation(origin = {100, -40}, extent = {{20, -20}, {-20, 20}}), iconTransformation(origin = {100, -40}, extent = {{20, -20}, {-20, 20}}, rotation = -0)));
+      Placement(transformation(origin = {88, -42}, extent = {{20, -20}, {-20, 20}}), iconTransformation(origin = {100, -40}, extent = {{20, -20}, {-20, 20}})));
     RPU_CounterClockWise rPU_CounterClockWise annotation(
       Placement(transformation(origin = {0, -40}, extent = {{-10, -10}, {10, 10}})));
   RPU_CounterClockWise rPU_CounterClockWise1 annotation(
@@ -32,17 +32,17 @@ package QC
     connect(rPU_ClockWise1.Torque, chasis.T_LB) annotation(
       Line(points = {{10, -18}, {20, -18}, {20, -4}, {26, -4}}, color = {0, 0, 127}, thickness = 0.5));
     connect(sensors.Position, controller.position) annotation(
-      Line(points = {{-10, -74}, {-60, -74}, {-60, 6}, {-46, 6}}, color = {0, 0, 127}, thickness = 0.5));
+      Line(points = {{-10, -65}, {-60, -65}, {-60, 6}, {-46, 6}}, color = {0, 0, 127}, thickness = 0.5));
     connect(sensors.Attitude, controller.attitude) annotation(
-      Line(points = {{-10, -84}, {-54, -84}, {-54, -4}, {-46, -4}}, color = {0, 0, 127}, thickness = 0.5));
+      Line(points = {{-10, -75}, {-54, -75}, {-54, -4}, {-46, -4}}, color = {0, 0, 127}, thickness = 0.5));
     connect(chasis.ActualPosition, sensors.RealPosition) annotation(
-      Line(points = {{46, -6}, {50, -6}, {50, -76}, {10, -76}}, color = {0, 0, 127}, thickness = 0.5));
+      Line(points = {{46, -6}, {50, -6}, {50, -66}, {10, -66}}, color = {0, 0, 127}, thickness = 0.5));
     connect(chasis.ActualAngle, sensors.RealAngle) annotation(
-      Line(points = {{46, -8}, {52, -8}, {52, -86}, {10, -86}}, color = {0, 0, 127}, thickness = 0.5));
+      Line(points = {{46, -8}, {52, -8}, {52, -75}, {10, -75}}, color = {0, 0, 127}, thickness = 0.5));
     connect(F_Wind, chasis.F_Wind) annotation(
-      Line(points = {{100, 40}, {60, 40}, {60, 6}, {46, 6}}, color = {0, 0, 127}, thickness = 0.5));
+      Line(points = {{88, 40}, {60, 40}, {60, 6}, {46, 6}}, color = {0, 0, 127}, thickness = 0.5));
     connect(T_Wind, chasis.T_Wind) annotation(
-      Line(points = {{100, -40}, {60, -40}, {60, 2}, {46, 2}}, color = {0, 0, 127}, thickness = 0.5));
+      Line(points = {{88, -42}, {60, -42}, {60, 2}, {46, 2}}, color = {0, 0, 127}, thickness = 0.5));
     connect(rPU_CounterClockWise.Force, chasis.F_LF) annotation(
       Line(points = {{10, -36}, {22, -36}, {22, -6}, {26, -6}}, color = {0, 0, 127}, thickness = 0.5));
     connect(rPU_CounterClockWise.Torque, chasis.T_LF) annotation(
@@ -187,7 +187,7 @@ package QC
     connect(worldForce2.frame_b, body.frame_a) annotation(
       Line(points = {{40, 80}, {-10, 80}, {-10, 0}}, color = {95, 95, 95}));
     annotation(
-      Icon(graphics = {Rectangle(fillColor = {170, 255, 255}, fillPattern = FillPattern.Solid, extent = {{-100, 100}, {100, -100}}), Text(origin = {-70, 74}, extent = {{-14, 12}, {14, -12}}, textString = "RF"), Text(origin = {-69, 31}, extent = {{-13, 13}, {13, -13}}, textString = "RB"), Text(origin = {-69, -26}, extent = {{-11, 14}, {11, -14}}, textString = "LB"), Text(origin = {-69, -74}, extent = {{-11, 12}, {11, -12}}, textString = "LF"), Text(origin = {73, 48}, extent = {{-13, 12}, {13, -12}}, textString = "W"), Text(origin = {71, -48}, extent = {{13, 12}, {-13, -12}}, textString = "S")}));
+      Icon(graphics = {Rectangle(fillColor = {170, 255, 255}, fillPattern = FillPattern.Solid, extent = {{-100, 100}, {100, -100}}), Text(origin = {-70, 74}, extent = {{-14, 12}, {14, -12}}, textString = "RF"), Text(origin = {-69, 31}, extent = {{-13, 13}, {13, -13}}, textString = "RB"), Text(origin = {-69, -26}, extent = {{-11, 14}, {11, -14}}, textString = "LB"), Text(origin = {-69, -74}, extent = {{-11, 12}, {11, -12}}, textString = "LF"), Text(origin = {73, 48}, extent = {{-13, 12}, {13, -12}}, textString = "W"), Text(origin = {71, -48}, extent = {{13, 12}, {-13, -12}}, textString = "S"), Text(origin = {2, 0}, extent = {{-46, 52}, {46, -52}}, textString = "F")}));
   end Chasis;
 
   model RotaryPropultionUnit
@@ -251,7 +251,8 @@ package QC
     connect(matrixGain.y, Torque) annotation(
       Line(points = {{50, -60}, {80, -60}, {80, -40}, {100, -40}}, color = {0, 0, 127}, thickness = 0.5));
     annotation(
-      Diagram);
+      Diagram,
+  Icon(graphics = {Rectangle(origin = {-100, 0}, fillColor = {170, 255, 127}, fillPattern = FillPattern.Solid, extent = {{0, 100}, {201, -100}}), Text(origin = {2, 0}, extent = {{-46, 52}, {46, -52}}, textString = "M")}));
   end RotaryPropultionUnit;
 
   model RPU_ClockWise
@@ -280,7 +281,9 @@ package QC
       Line(points = {{100, 40}, {-106, 40}}, color = {0, 0, 127}, thickness = 0.5));
     connect(RealAngle, Attitude) annotation(
       Line(points = {{100, -40}, {-106, -40}}, color = {0, 0, 127}, thickness = 0.5));
-  end Sensors;
+  annotation(
+      Icon(graphics = {Rectangle(fillColor = {170, 170, 255}, fillPattern = FillPattern.Solid, extent = {{-100, 100}, {100, -100}}), Text(origin = {2, 0}, extent = {{-46, 52}, {46, -52}}, textString = "S")}));
+end Sensors;
 
   model Controller
     Modelica.Blocks.Interfaces.RealInput position[3] annotation(
@@ -499,7 +502,8 @@ package QC
       Line(points = {{-102, -90}, {-36, -90}, {-36, -62}, {38, -62}}, color = {0, 0, 127}));
     annotation(
       __OpenModelica_simulationFlags(lv = "LOG_STATS", s = "dassl", variableFilter = ".*"),
-      Diagram(coordinateSystem(extent = {{-100, -100}, {100, 100}})));
+      Diagram(coordinateSystem(extent = {{-100, -100}, {100, 100}})),
+  Icon(graphics = {Rectangle(fillColor = {255, 170, 0}, fillPattern = FillPattern.Solid, extent = {{-100, 100}, {100, -100}}), Text(origin = {2, 0}, extent = {{-46, 52}, {46, -52}}, textString = "C")}));
   end Controller;
 
   model Wind
